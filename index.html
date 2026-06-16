@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <title>
+        Survey Paper Retrieval System
+    </title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>
+        Survey Paper Retrieval System
+        with Automatic Keyword Extraction
+    </h1>
+
+    <form method="POST"
+      enctype="multipart/form-data">
+
+    <h3>Upload Survey Papers</h3>
+
+    <input type="file"
+           name="pdf_files"
+           multiple>
+
+    <br><br>
+
+    <button type="submit">
+        Extract Keywords
+    </button>
+
+    <br><br>
+
+    <h3>Search Survey Papers</h3>
+
+    <input type="text"
+           name="query"
+           placeholder="Enter search query">
+
+    <button type="submit">
+        Search Papers
+    </button>
+
+</form>
+
+    <h2>Extracted Keywords</h2>
+
+    {% for file, words in keywords.items() %}
+
+        <div class="card">
+
+            <h3>{{ file }}</h3>
+
+            <p>
+
+                  {{ words | join(', ') }}
+
+
+            </p>
+
+        </div>
+
+    {% endfor %}
+
+    {% if results %}
+
+        <h2>Top Matching Papers</h2>
+
+        {% for score, doc in results %}
+
+            <div class="card">
+
+                <h3>{{ doc }}</h3>
+
+                <p>
+                    Relevance Score :
+                    {{ score }}
+                </p>
+
+            </div>
+
+        {% endfor %}
+
+    {% endif %}
+
+</div>
+
+</body>
+</html>
